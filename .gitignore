@@ -1,0 +1,33 @@
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+
+# Java / Maven / Gradle
+target/
+build/
+.gradle/
+
+# Node / Angular
+node_modules/
+dist/
+.angular/
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# Env / Secrets
+.env
+*.env
+
+# Logs
+*.log
+
+# Docker / local
+docker-data/
