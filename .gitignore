@@ -31,3 +31,6 @@ venv/
 
 # Docker / local
 docker-data/
+
+# Local Codex working memory
+.codex/
