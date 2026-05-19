@@ -34,3 +34,4 @@ docker-data/
 
 # Local Codex working memory
 .codex/
+AGENTS.md
