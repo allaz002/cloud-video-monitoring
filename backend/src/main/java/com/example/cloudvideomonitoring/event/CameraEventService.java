@@ -2,6 +2,7 @@ package com.example.cloudvideomonitoring.event;
 
 import com.example.cloudvideomonitoring.camera.Camera;
 import com.example.cloudvideomonitoring.camera.CameraRepository;
+import com.example.cloudvideomonitoring.common.CameraStatus;
 import com.example.cloudvideomonitoring.common.EventType;
 import com.example.cloudvideomonitoring.common.Severity;
 import org.springframework.stereotype.Service;
@@ -26,7 +27,19 @@ public class CameraEventService {
         Camera camera = cameraRepository.findById(cameraId)
                 .orElseThrow(() -> new IllegalArgumentException("Camera not found: " + cameraId));
         CameraEvent event = new CameraEvent(camera, type, severity, message, mediaRef, occurredAt);
+        applyCameraStatusUpdate(camera, type, severity, occurredAt);
         return cameraEventRepository.save(event);
+    }
+
+    private void applyCameraStatusUpdate(Camera camera, EventType type, Severity severity, Instant occurredAt) {
+        if (type == EventType.HEARTBEAT) {
+            camera.setStatus(CameraStatus.ONLINE);
+            camera.setLastSeenAt(occurredAt);
+        } else if (type == EventType.OFFLINE) {
+            camera.setStatus(CameraStatus.OFFLINE);
+        } else if (type == EventType.ALARM && severity == Severity.CRITICAL) {
+            camera.setStatus(CameraStatus.ALERT);
+        }
     }
 
     @Transactional(readOnly = true)
