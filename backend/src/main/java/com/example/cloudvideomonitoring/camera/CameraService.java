@@ -4,6 +4,8 @@ import com.example.cloudvideomonitoring.common.CameraStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.Duration;
+import java.time.Instant;
 import java.util.List;
 
 @Service
@@ -34,5 +36,13 @@ public class CameraService {
     @Transactional(readOnly = true)
     public List<Camera> getCamerasByStatus(CameraStatus status) {
         return cameraRepository.findByStatus(status);
+    }
+
+    @Transactional
+    public int markStaleCamerasOffline(Duration timeout, Instant now) {
+        Instant cutoff = now.minus(timeout);
+        List<Camera> staleCameras = cameraRepository.findByStatusNotAndLastSeenAtBefore(CameraStatus.OFFLINE, cutoff);
+        staleCameras.forEach(camera -> camera.setStatus(CameraStatus.OFFLINE));
+        return staleCameras.size();
     }
 }
