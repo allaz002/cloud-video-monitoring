@@ -30,3 +30,9 @@ info:
   app:
     name: cloud-video-monitoring
     description: Camera monitoring application
+
+logging:
+  level:
+    com.example.cloudvideomonitoring: INFO
+    org.springframework.web: INFO
+    org.hibernate.SQL: OFF

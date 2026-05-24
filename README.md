@@ -74,7 +74,24 @@ Metrics overview:
 Invoke-RestMethod http://localhost:8081/actuator/metrics
 ```
 
+Useful metric examples:
+
+```powershell
+Invoke-RestMethod http://localhost:8081/actuator/metrics/http.server.requests
+Invoke-RestMethod http://localhost:8081/actuator/metrics/jvm.memory.used
+Invoke-RestMethod http://localhost:8081/actuator/metrics/process.uptime
+```
+
+Backend logs are written to the backend console. Local logging keeps application and Spring Web output at `INFO`; Hibernate SQL logging is not enabled by default.
+
 Only `health`, `info`, and `metrics` are exposed over HTTP for local checks. Sensitive actuator endpoints such as `env`, `beans`, `mappings`, `configprops`, `heapdump`, and `threaddump` are not exposed.
+
+## Troubleshooting
+
+- Backend unavailable: confirm the backend is running on port `8081` and check the backend console output.
+- Database unavailable: start PostgreSQL with `docker compose up -d`, then check `docker ps`.
+- Angular cannot reach backend: confirm the backend is running on `http://localhost:8081` and the frontend is running on `http://localhost:4200`.
+- Simulator cannot send events: confirm the backend is running, cameras can be listed from `/api/cameras`, and the simulator `--backend-url` points to `http://localhost:8081`.
 
 ## API Examples
 
