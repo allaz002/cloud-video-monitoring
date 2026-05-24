@@ -13,3 +13,20 @@ spring:
     hibernate:
       ddl-auto: update
     open-in-view: false
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics
+  endpoint:
+    health:
+      show-details: always
+  info:
+    env:
+      enabled: true
+
+info:
+  app:
+    name: cloud-video-monitoring
+    description: Camera monitoring application

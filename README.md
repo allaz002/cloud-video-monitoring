@@ -54,6 +54,28 @@ Open the dashboard:
 http://localhost:4200
 ```
 
+## Operations Checks
+
+Health check:
+
+```powershell
+Invoke-RestMethod http://localhost:8081/actuator/health
+```
+
+Application info:
+
+```powershell
+Invoke-RestMethod http://localhost:8081/actuator/info
+```
+
+Metrics overview:
+
+```powershell
+Invoke-RestMethod http://localhost:8081/actuator/metrics
+```
+
+Only `health`, `info`, and `metrics` are exposed over HTTP for local checks. Sensitive actuator endpoints such as `env`, `beans`, `mappings`, `configprops`, `heapdump`, and `threaddump` are not exposed.
+
 ## API Examples
 
 Create a camera:
