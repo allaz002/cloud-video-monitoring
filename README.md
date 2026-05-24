@@ -4,12 +4,30 @@
 
 The system collects simulated camera events, persists camera and event metadata, derives camera status, and exposes the data through REST APIs for the dashboard.
 
+## Features
+
+- Camera and event metadata persistence with PostgreSQL.
+- Camera status derivation from heartbeat, alarm, offline, and timeout logic.
+- REST API for cameras and events.
+- Angular dashboard for camera status and recent events.
+- Python simulator for local camera event generation.
+- Local operations checks through Spring Boot Actuator health, info, and metrics.
+- GitHub Actions build verification for backend and frontend changes.
+
 ## Architecture
 
 - Spring Boot backend under `backend/`
 - PostgreSQL via root `docker-compose.yml`
 - Angular dashboard under `frontend/`
 - Python simulator under `simulator/`
+
+## Project Structure
+
+- `backend/`: Spring Boot REST API, persistence, status logic, and tests.
+- `frontend/`: Angular dashboard.
+- `simulator/`: Python camera event simulator.
+- `docker-compose.yml`: local PostgreSQL runtime.
+- `.github/workflows/`: GitHub Actions CI workflow.
 
 ## Prerequisites
 
@@ -163,3 +181,16 @@ python camera_simulator.py --iterations 5 --delay-seconds 2
 - Angular frontend: `4200`
 - PostgreSQL host port: `5433`
 - PostgreSQL container port: `5432`
+
+## CI
+
+GitHub Actions runs build checks on push and pull request:
+
+- Backend: Java 21 with Maven Wrapper, running build and tests from `backend/`.
+- Frontend: Node.js with `npm ci` and Angular build from `frontend/`.
+
+## Notes
+
+- Local PostgreSQL credentials are for development use only.
+- Actuator exposure is intentionally limited to `health`, `info`, and `metrics`.
+- `simulator/.venv` and `frontend/node_modules` are local dependency folders and must not be committed.
