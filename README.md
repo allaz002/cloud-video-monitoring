@@ -1,15 +1,15 @@
 # cloud-video-monitoring
 
-`cloud-video-monitoring` is a camera monitoring system built with a Spring Boot backend, PostgreSQL, and a Python camera simulator.
+`cloud-video-monitoring` is a camera monitoring application built with a Spring Boot backend, PostgreSQL, an Angular dashboard, and a Python camera simulator.
 
-The system collects simulated camera events, persists camera and event metadata, derives camera status, and exposes the data through REST APIs.
+The system collects simulated camera events, persists camera and event metadata, derives camera status, and exposes the data through REST APIs for the dashboard.
 
-## Current Architecture
+## Architecture
 
 - Spring Boot backend under `backend/`
 - PostgreSQL via root `docker-compose.yml`
+- Angular dashboard under `frontend/`
 - Python simulator under `simulator/`
-- Angular dashboard planned later under `frontend/`
 
 ## Prerequisites
 
@@ -17,6 +17,7 @@ The system collects simulated camera events, persists camera and event metadata,
 - Docker Desktop
 - Python 3
 - Git
+- Node.js and npm
 - Maven Wrapper included; no global Maven installation required
 
 ## Local Startup
@@ -40,10 +41,17 @@ Check backend health:
 Invoke-RestMethod http://localhost:8081/actuator/health
 ```
 
-Expected status:
+Start the frontend in another terminal:
+
+```powershell
+cd frontend
+npm.cmd start
+```
+
+Open the dashboard:
 
 ```text
-UP
+http://localhost:4200
 ```
 
 ## API Examples
@@ -112,6 +120,7 @@ python camera_simulator.py --iterations 5 --delay-seconds 2
 
 ## Useful Ports
 
-- Backend: `8081`
+- Backend API: `8081`
+- Angular frontend: `4200`
 - PostgreSQL host port: `5433`
 - PostgreSQL container port: `5432`
